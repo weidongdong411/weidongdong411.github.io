@@ -10,7 +10,7 @@
   
   <title>
     
-      我的第一篇博客 | 冬来冬往的博客
+      Image Generation Model | 冬来冬往的博客
     
   </title>
   <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -180,8 +180,8 @@
 </header>
 
     <div id="article-banner">
-  <h2>我的第一篇博客</h2>
-  <p class="post-date">2023-06-14</p>
+  <h2>Image Generation Model</h2>
+  <p class="post-date">2023-07-16</p>
   <div class="arrow-down">
     <a href="javascript:;"></a>
   </div>
@@ -189,23 +189,25 @@
 <main class="app-body flex-box">
   <!-- Article START -->
   <article class="post-article">
-    <section class="markdown-content"><p>不知不觉，已毕业十年，我从一个刚毕业的菜鸟变成了一个已经工作十年的菜鸟。回首这十年，顿觉人生也不过如此，每天几乎在重复，以后可能也是这样。从初中求学开始到大学毕业也是十年，和工作的十年比真的差别太大了。</p>
-<p>我以前喜欢手写日记，主要觉得可以练练字，记录的也都是单身的时候那些狗血的多愁善感。但从谈恋爱开始就中止了好几年，后来又有独处的时间断断续续写了一段时间，但随着人生阶段的变化，老婆怀孕、生孩子、老人过来，独处的时间几乎没有了，终究还是要放弃吧。</p>
-<p>真的很惭愧，工作十年了，自己还是一个最底层的砖头，可能因为自己不会思考，可能是被应试教育害的，上学期间只会死记硬背知识，不会主动思考，回头想想，这样即使是考上了认为还可以的大学，以后的路还是走的比较吃力。所以穷人还是目光短浅。</p>
-<p>一直很羡慕别人有时间、有能力写博客，慢慢的了解到其实最有效的学习就是跟别人输出，但是一直各种理由推脱。后来其实也有所感悟，任何事情，只要开始，只要去做，迈出第一步，就成功了一大部分。没想到我的这一步一直等了十年。</p>
-<p>最近逐渐理清了该如何记录，打算迈出这一步了，不希望有多深奥的研究，只是用来记录自己的点点滴滴。我仍旧是个菜鸟，不怕别人笑话。</p>
+    <section class="markdown-content"><p>本文源自于以下内容做的整理。<br><a target="_blank" rel="noopener" href="https://www.cloudskillsboost.google/journeys/118">Generative AI learning path</a></p>
+<p>Image Generation Model Families</p>
+<h2 id="Variational-Auto-Encoders-VAEs"><a href="#Variational-Auto-Encoders-VAEs" class="headerlink" title="Variational Auto Encoders (VAEs)"></a>Variational Auto Encoders (VAEs)</h2><p>Encode images to a compressed size, then decode back to the original size, while learning the distribution of the data itself.</p>
+<h2 id="Generative-Adversarial-Models-GANs"><a href="#Generative-Adversarial-Models-GANs" class="headerlink" title="Generative Adversarial Models(GANs)"></a>Generative Adversarial Models(GANs)</h2><p>pit two neural networks against each other. One neural network the generator create images and the other neural network the discriminator(鉴别器) predicts if the image is real or fake. Over time the discriminator get better and better at distinguishing between real and fake and the generator gets better and better at creating real looking fakes. </p>
+<h2 id="Auto-Regressive-Models"><a href="#Auto-Regressive-Models" class="headerlink" title="Auto Regressive Models"></a>Auto Regressive Models</h2><p>Generative images by treating an image as a sequence of pixels. And the modern approach with auto regressive models actually draws much of its inspiration from how LLM’s models handle text.</p>
+<h2 id="Diffusion-扩散-Models"><a href="#Diffusion-扩散-Models" class="headerlink" title="Diffusion(扩散) Models"></a>Diffusion(扩散) Models</h2><p>Diffusion models draw their inspiration from physics specially thermodynamics.</p>
+<h3 id="What-is-it"><a href="#What-is-it" class="headerlink" title="What is it?"></a>What is it?</h3><p>The essential idea is to systematically and slowly destroy structure in a data distribution through an iterative(重复的) forward diffusion process. This is going to be adding noise iteratively to an image. We then learn a reverse diffusion process that restore structure in the data, yielding a highly flexible and  tractable generative model of the data.<br><img src="https://cdn.staticaly.com/gh/weidongdong411/picx-images-hosting@master/20230709/image.2fput07bdjvo.webp"><br>In other words, we can add noise to an image iteratively and then we can train a model that learns how to de-noise an image, thus generating novel images.</p>
+<h3 id="Denoising-Diffusion-Probabilistic-Models-DDPM"><a href="#Denoising-Diffusion-Probabilistic-Models-DDPM" class="headerlink" title="Denoising Diffusion Probabilistic Models(DDPM)"></a>Denoising Diffusion Probabilistic Models(DDPM)</h3><p>The goal is that we want to have this model learn to de-noise to remove noise.</p>
+<h3 id="DDPM-Training"><a href="#DDPM-Training" class="headerlink" title="DDPM Training"></a>DDPM Training</h3><p><img src="https://cdn.staticaly.com/gh/weidongdong411/picx-images-hosting@master/20230709/image.6f4wwupm9so0.webp"><br>We have the initial image x on the left, and we sample at a time step to create a noisy image, we then send that through our noisy model with the goal  of predicting the noise, so the output of the model is the predicted noise.<br>We can see what is the difference between the model’s predicted noise and the actual noise we added.<br>Now the model is trained similar to most machine learning models, and over time after seeing enough examples this model gets very very good at removing noise from images.</p>
+<h3 id="DDPM-Generation"><a href="#DDPM-Generation" class="headerlink" title="DDPM Generation"></a>DDPM Generation</h3><p><img src="https://cdn.staticaly.com/gh/weidongdong411/picx-images-hosting@master/20230709/image.17eu55jn87mo.webp"><br>We can just start with pure absolute noise and send that noise through our model  that is trained. We then take the output of the predicted noise and subtract it from the initial noise, and if we do that over and over and over again, we end up with a generated image.<br>Another way to think about it is that the model is able to learn the real data distribution of images that it’s seen and then sample from that learn distribution to create new novel images.</p>
+<h2 id="Text-to-image-Models"><a href="#Text-to-image-Models" class="headerlink" title="Text-to-image Models"></a>Text-to-image Models</h2><p>combine the power of diffusion models with LLMs.</p>
 </section>
     <!-- Tags START -->
     
       <div class="tags">
         <span>Tags:</span>
         
-  <a href="/tags#随笔" >
-    <span class="tag-code">随笔</span>
-  </a>
-
-  <a href="/tags#感悟" >
-    <span class="tag-code">感悟</span>
+  <a href="/tags#AI" >
+    <span class="tag-code">AI</span>
   </a>
 
       </div>
@@ -216,17 +218,17 @@
   <div class="nav-container">
     <!-- reverse left and right to put prev and next in a more logic postition -->
     
-      <a class="nav-left" href="/2023/06/13/hello-world/">
+      <a class="nav-left" href="/2023/07/09/AI%E5%85%A5%E9%97%A8%E6%95%B4%E7%90%86/">
         <span class="nav-arrow">← </span>
         
-          Hello World
+          AI入门整理
         
       </a>
     
     
-      <a class="nav-right" href="/2023/06/14/%E4%BA%BA%E7%94%9F%E6%97%85%E7%A8%8B/">
+      <a class="nav-right" href="/2023/07/17/Encoder-Decoder%20Architecture/">
         
-          人生旅程
+          Encoder-Decoder Architecture
         
         <span class="nav-arrow"> →</span>
       </a>
@@ -281,7 +283,7 @@
   <div class="toc-main">
     <strong class="toc-title">Catalog</strong>
     
-      <ol class="nav">none</ol>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Variational-Auto-Encoders-VAEs"><span class="toc-nav-text">Variational Auto Encoders (VAEs)</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Generative-Adversarial-Models-GANs"><span class="toc-nav-text">Generative Adversarial Models(GANs)</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Auto-Regressive-Models"><span class="toc-nav-text">Auto Regressive Models</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Diffusion-%E6%89%A9%E6%95%A3-Models"><span class="toc-nav-text">Diffusion(扩散) Models</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#What-is-it"><span class="toc-nav-text">What is it?</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Denoising-Diffusion-Probabilistic-Models-DDPM"><span class="toc-nav-text">Denoising Diffusion Probabilistic Models(DDPM)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#DDPM-Training"><span class="toc-nav-text">DDPM Training</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#DDPM-Generation"><span class="toc-nav-text">DDPM Generation</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Text-to-image-Models"><span class="toc-nav-text">Text-to-image Models</span></a></li></ol>
     
   </div>
 </aside>
@@ -291,7 +293,7 @@
 
 <script>
   (function () {
-    var url = 'http://example.com/2023/06/14/我的第一篇博客/';
+    var url = 'http://example.com/2023/07/16/Image Generation Model/';
     var banner = ''
     if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
       $('#article-banner').css({

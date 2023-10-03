@@ -10,7 +10,7 @@
   
   <title>
     
-      我的第一篇博客 | 冬来冬往的博客
+      Encoder-Decoder Architecture | 冬来冬往的博客
     
   </title>
   <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -180,8 +180,8 @@
 </header>
 
     <div id="article-banner">
-  <h2>我的第一篇博客</h2>
-  <p class="post-date">2023-06-14</p>
+  <h2>Encoder-Decoder Architecture</h2>
+  <p class="post-date">2023-07-17</p>
   <div class="arrow-down">
     <a href="javascript:;"></a>
   </div>
@@ -189,23 +189,18 @@
 <main class="app-body flex-box">
   <!-- Article START -->
   <article class="post-article">
-    <section class="markdown-content"><p>不知不觉，已毕业十年，我从一个刚毕业的菜鸟变成了一个已经工作十年的菜鸟。回首这十年，顿觉人生也不过如此，每天几乎在重复，以后可能也是这样。从初中求学开始到大学毕业也是十年，和工作的十年比真的差别太大了。</p>
-<p>我以前喜欢手写日记，主要觉得可以练练字，记录的也都是单身的时候那些狗血的多愁善感。但从谈恋爱开始就中止了好几年，后来又有独处的时间断断续续写了一段时间，但随着人生阶段的变化，老婆怀孕、生孩子、老人过来，独处的时间几乎没有了，终究还是要放弃吧。</p>
-<p>真的很惭愧，工作十年了，自己还是一个最底层的砖头，可能因为自己不会思考，可能是被应试教育害的，上学期间只会死记硬背知识，不会主动思考，回头想想，这样即使是考上了认为还可以的大学，以后的路还是走的比较吃力。所以穷人还是目光短浅。</p>
-<p>一直很羡慕别人有时间、有能力写博客，慢慢的了解到其实最有效的学习就是跟别人输出，但是一直各种理由推脱。后来其实也有所感悟，任何事情，只要开始，只要去做，迈出第一步，就成功了一大部分。没想到我的这一步一直等了十年。</p>
-<p>最近逐渐理清了该如何记录，打算迈出这一步了，不希望有多深奥的研究，只是用来记录自己的点点滴滴。我仍旧是个菜鸟，不怕别人笑话。</p>
+    <section class="markdown-content"><h2 id="What-is-it"><a href="#What-is-it" class="headerlink" title="What is it?"></a>What is it?</h2><p>Encoder-Decoder architecture is a sequence-to-sequence architecture. This means that it takes, for example a sequence of words as input, and output a sequence of text.<br>It is a machine that consumes sequences and splits out sequences.</p>
+<h2 id="How-does-it-do-it"><a href="#How-does-it-do-it" class="headerlink" title="How does it do it?"></a>How does it do it?</h2><h3 id="Encoder"><a href="#Encoder" class="headerlink" title="Encoder"></a>Encoder</h3><p>Produces a vector representation of the input sentence.<br><img src="https://cdn.staticaly.com/gh/weidongdong411/picx-images-hosting@master/20230709/image.2xuva7nbio40.webp"><br>A recurrent(周期的) neural network(RNN) encoder takes each token in the input sequence one at a time and produces a state representing this token as well as all the previously ingested(获取) tokens.<br>Then the state is used in the next encoding step as input along with the next token to produce the next state.<br>Once you are done ingesting all the input tokens into the RNN, you output a vector that essentially represents the full input sentence.</p>
+<h3 id="Decoder"><a href="#Decoder" class="headerlink" title="Decoder"></a>Decoder</h3><p>Creates the sequence output.<br><img src="https://cdn.staticaly.com/gh/weidongdong411/picx-images-hosting@master/20230709/image.3jxyrpj4pzm0.webp"><br>The decoder takes the vector representation of the input sentence and produces an output sentence from that representation.<br>In the case of an RNN decoder, it does it in steps, decoding the output one token at a time using the current state and what has been decoded so far</p>
+<h2 id="Transformer"><a href="#Transformer" class="headerlink" title="Transformer"></a>Transformer</h2><p>The simple RNN network is replaced by transformer blocks, which is based on the attention mechanism.<br><img src="https://cdn.staticaly.com/gh/weidongdong411/picx-images-hosting@master/20230709/image.17r1opq5x4yk.webp"></p>
 </section>
     <!-- Tags START -->
     
       <div class="tags">
         <span>Tags:</span>
         
-  <a href="/tags#随笔" >
-    <span class="tag-code">随笔</span>
-  </a>
-
-  <a href="/tags#感悟" >
-    <span class="tag-code">感悟</span>
+  <a href="/tags#AI" >
+    <span class="tag-code">AI</span>
   </a>
 
       </div>
@@ -216,17 +211,17 @@
   <div class="nav-container">
     <!-- reverse left and right to put prev and next in a more logic postition -->
     
-      <a class="nav-left" href="/2023/06/13/hello-world/">
+      <a class="nav-left" href="/2023/07/16/Image%20Generation%20Model/">
         <span class="nav-arrow">← </span>
         
-          Hello World
+          Image Generation Model
         
       </a>
     
     
-      <a class="nav-right" href="/2023/06/14/%E4%BA%BA%E7%94%9F%E6%97%85%E7%A8%8B/">
+      <a class="nav-right" href="/2023/10/02/%E5%AE%9D%E8%B4%9D%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%94%9F%E7%97%85/">
         
-          人生旅程
+          宝贝第一次生病
         
         <span class="nav-arrow"> →</span>
       </a>
@@ -281,7 +276,7 @@
   <div class="toc-main">
     <strong class="toc-title">Catalog</strong>
     
-      <ol class="nav">none</ol>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#What-is-it"><span class="toc-nav-text">What is it?</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#How-does-it-do-it"><span class="toc-nav-text">How does it do it?</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Encoder"><span class="toc-nav-text">Encoder</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Decoder"><span class="toc-nav-text">Decoder</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Transformer"><span class="toc-nav-text">Transformer</span></a></li></ol>
     
   </div>
 </aside>
@@ -291,7 +286,7 @@
 
 <script>
   (function () {
-    var url = 'http://example.com/2023/06/14/我的第一篇博客/';
+    var url = 'http://example.com/2023/07/17/Encoder-Decoder Architecture/';
     var banner = ''
     if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
       $('#article-banner').css({

@@ -10,7 +10,7 @@
   
   <title>
     
-      我的第一篇博客 | 冬来冬往的博客
+      Git 突然连不上 | 冬来冬往的博客
     
   </title>
   <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -180,8 +180,8 @@
 </header>
 
     <div id="article-banner">
-  <h2>我的第一篇博客</h2>
-  <p class="post-date">2023-06-14</p>
+  <h2>Git 突然连不上</h2>
+  <p class="post-date">2023-07-09</p>
   <div class="arrow-down">
     <a href="javascript:;"></a>
   </div>
@@ -189,23 +189,60 @@
 <main class="app-body flex-box">
   <!-- Article START -->
   <article class="post-article">
-    <section class="markdown-content"><p>不知不觉，已毕业十年，我从一个刚毕业的菜鸟变成了一个已经工作十年的菜鸟。回首这十年，顿觉人生也不过如此，每天几乎在重复，以后可能也是这样。从初中求学开始到大学毕业也是十年，和工作的十年比真的差别太大了。</p>
-<p>我以前喜欢手写日记，主要觉得可以练练字，记录的也都是单身的时候那些狗血的多愁善感。但从谈恋爱开始就中止了好几年，后来又有独处的时间断断续续写了一段时间，但随着人生阶段的变化，老婆怀孕、生孩子、老人过来，独处的时间几乎没有了，终究还是要放弃吧。</p>
-<p>真的很惭愧，工作十年了，自己还是一个最底层的砖头，可能因为自己不会思考，可能是被应试教育害的，上学期间只会死记硬背知识，不会主动思考，回头想想，这样即使是考上了认为还可以的大学，以后的路还是走的比较吃力。所以穷人还是目光短浅。</p>
-<p>一直很羡慕别人有时间、有能力写博客，慢慢的了解到其实最有效的学习就是跟别人输出，但是一直各种理由推脱。后来其实也有所感悟，任何事情，只要开始，只要去做，迈出第一步，就成功了一大部分。没想到我的这一步一直等了十年。</p>
-<p>最近逐渐理清了该如何记录，打算迈出这一步了，不希望有多深奥的研究，只是用来记录自己的点点滴滴。我仍旧是个菜鸟，不怕别人笑话。</p>
+    <section class="markdown-content"><p>今天执行 <code>git pull</code> 命令，突然要求必须输入密码，开始以为是公钥和GitHub上的不匹配了。后来经过了以下几个步骤的操作确认<br><strong>一、重新生成密钥对，并将公钥配置到GitHub中，发现不起作用</strong><br>这个过程搞清楚了要想本地免密执行Git命令，只需要配置密钥就可以，步骤如下：<br> 1、在 ~&#x2F;.ssh 目录下执行生成密钥，执行完之后，会生成两个文件 <code>id_ed25519</code>和 <code>id_ed25519.pub</code>两个文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t ed25519 -C &quot;your_email@example.com&quot;</span><br></pre></td></tr></table></figure>
+<p>这里 <a href="mailto:&#x79;&#111;&#x75;&#x72;&#x5f;&#101;&#109;&#97;&#105;&#108;&#64;&#101;&#120;&#97;&#x6d;&#112;&#108;&#101;&#46;&#99;&#x6f;&#x6d;">&#x79;&#111;&#x75;&#x72;&#x5f;&#101;&#109;&#97;&#105;&#108;&#64;&#101;&#120;&#97;&#x6d;&#112;&#108;&#101;&#46;&#99;&#x6f;&#x6d;</a> 可以是任意字符串，不一定必须是邮箱。<br>2、将 <code>id_ed25519.pub</code>的内容复制到 GitHub “Settings”-&gt;”SSH and GPG keys”下面<br>3、测试链接</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+<p>如果成功将收到以下消息</p>
+<blockquote>
+<p>Hi xxx! You’ve successfully authenticated, but GitHub does not provide shell access.</p>
+</blockquote>
+<p>很可惜，我没有收到这个消息，配置完之后，还让我输入密码。</p>
+<p><strong>二、后来发现输入密码竟然也不能 pull，所以应该不是密钥的问题。</strong><br>也确认过密码肯定是正确的，后来发现 git clone 竟然也不能执行<br>用 https 协议</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.com/xxx.git</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>fatal: unable to access ‘<a target="_blank" rel="noopener" href="https://github.com/xxx.git/">https://github.com/xxx.git/</a>‘: Failed to connect to github.com port 443 after 27 ms: Connection refused</p>
+</blockquote>
+<p>用 ssh 协议</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone git@github.com:xxx.git</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Received disconnect from 127.0.0.1 port 22:2: Too many authentication failures<br>Disconnected from 127.0.0.1 port 22<br>fatal: Could not read from remote repository.<br>Please make sure you have the correct access rights<br>and the repository exists.</p>
+</blockquote>
+<p><strong>三、最后根据这里的方案解决了</strong><br><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/58816676/failed-to-connect-to-github-com-port-443-connection-timed-out-when-pushing-to">https://stackoverflow.com/questions/58816676/failed-to-connect-to-github-com-port-443-connection-timed-out-when-pushing-to</a><br>在 ~&#x2F;.ssh&#x2F;config 中配置如下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Host github.com</span><br><span class="line">  Hostname ssh.github.com</span><br><span class="line">  Port 443</span><br></pre></td></tr></table></figure>
+
+<p>这个配置我让 ChatGPT 解释了一下</p>
+<blockquote>
+<p>这样的配置是为了通过 SSH 协议访问 GitHub，即使用 SSH 代替 HTTPS 进行连接。这里的配置实现了以下几点：</p>
+<ol>
+<li><p><code>Host github.com</code>：这是一个主机别名，将 <code>github.com</code> 与后续配置关联起来。</p>
+</li>
+<li><p><code>Hostname ssh.github.com</code>：这是实际要连接的主机名。通过将 <code>github.com</code> 的主机名更改为 <code>ssh.github.com</code>，你将指示 SSH 使用 GitHub 提供的专用 SSH 服务。</p>
+</li>
+<li><p><code>Port 443</code>：这是 SSH 连接使用的端口号。将端口号设置为 443 是因为 GitHub 的 SSH 服务在该端口上监听。</p>
+</li>
+</ol>
+<p>通过这些配置，当你使用 <code>git clone</code>、<code>git pull</code> 或其他 Git 操作时，Git 将使用 SSH 协议通过 <code>ssh.github.com</code> 和端口 443 连接到 GitHub。这样可以避免了 HTTPS 连接的限制或问题，并允许使用 SSH 密钥进行身份验证。</p>
+<p>值得注意的是，这个配置只对 <code>github.com</code> 生效，对其他主机不会产生影响。你仍然可以使用 HTTPS 连接访问其他网站或 Git 仓库。</p>
+</blockquote>
+<p>所以最终也只能使用 ssh 协议，例如如果关联的是 https 的链接，还是无法生效，所以如果其他仓库还有问题，需要确认下关联的是 https的协议，还是ssh协议。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git remote -v</span><br><span class="line">origin	git@github.com:xxx.git (fetch)</span><br><span class="line">origin	git@github.com:xxx.git (push)</span><br></pre></td></tr></table></figure>
 </section>
     <!-- Tags START -->
     
       <div class="tags">
         <span>Tags:</span>
         
-  <a href="/tags#随笔" >
-    <span class="tag-code">随笔</span>
+  <a href="/tags#总结" >
+    <span class="tag-code">总结</span>
   </a>
 
-  <a href="/tags#感悟" >
-    <span class="tag-code">感悟</span>
+  <a href="/tags#Git" >
+    <span class="tag-code">Git</span>
+  </a>
+
+  <a href="/tags#工具" >
+    <span class="tag-code">工具</span>
   </a>
 
       </div>
@@ -216,17 +253,17 @@
   <div class="nav-container">
     <!-- reverse left and right to put prev and next in a more logic postition -->
     
-      <a class="nav-left" href="/2023/06/13/hello-world/">
+      <a class="nav-left" href="/2023/06/14/%E4%BA%BA%E7%94%9F%E6%97%85%E7%A8%8B/">
         <span class="nav-arrow">← </span>
         
-          Hello World
+          人生旅程
         
       </a>
     
     
-      <a class="nav-right" href="/2023/06/14/%E4%BA%BA%E7%94%9F%E6%97%85%E7%A8%8B/">
+      <a class="nav-right" href="/2023/07/09/AI%E5%85%A5%E9%97%A8%E6%95%B4%E7%90%86/">
         
-          人生旅程
+          AI入门整理
         
         <span class="nav-arrow"> →</span>
       </a>
@@ -291,7 +328,7 @@
 
 <script>
   (function () {
-    var url = 'http://example.com/2023/06/14/我的第一篇博客/';
+    var url = 'http://example.com/2023/07/09/Git 突然连不上/';
     var banner = ''
     if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
       $('#article-banner').css({
